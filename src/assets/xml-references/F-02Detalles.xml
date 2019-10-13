@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Comprobante xmlns="http://facele.pe/docele/schemas/v10/Comprobante">
+    <cpe>
+        <tipoComprobante>FACTURA</tipoComprobante>
+        <serie>F001</serie>
+        <correlativo>1337</correlativo>
+        <emisor>
+            <ruc>20601122406</ruc>
+            <razonSocial>FACELE SAC</razonSocial>
+            <nombreComercial>FACELE SAC</nombreComercial>
+            <domicilioFiscal>
+                 <ubigeo>150122</ubigeo>
+                 <direccionCompleta>CALLE ENRIQUE MEIGGS NRO. 199 DPTO. 401</direccionCompleta>
+                 <urbanizacion>-</urbanizacion>
+                 <departamento>Lima</departamento>
+                 <provincia>Lima</provincia>
+                 <distrito>Miraflores</distrito>
+            </domicilioFiscal>
+        </emisor>
+        <adquiriente>
+            <tipoIdentificacion>RUC</tipoIdentificacion>
+            <numeroIdentificacion>20486441713</numeroIdentificacion>
+            <nombre>LA LEñA S.A.C.</nombre>
+            <direccionFisica>AV. LAS VIOLETAS NRO. 772 (COSTADO NOTARIA BEATRIZ ZEVALLOS) LIMA - LIMA - INDEPENDENCIA</direccionFisica>
+            <email>p.carpio@adv.com.pe , g.c.contadoresyasesores@gmail.com, y.zurita@adv.com.pe ,p.armas@adv.com.pe,20486441713@docele.pe</email>
+        </adquiriente>
+        <condiciones>
+            <fechaEmision>2019-10-13</fechaEmision>
+            <fechaVencimiento>2019-10-13</fechaVencimiento>
+            <moneda>USD</moneda>
+        </condiciones>
+        <detalle>
+            <unidadMedida>ZZ</unidadMedida>
+            <cantidadUnidades>1</cantidadUnidades>
+            <codigo>01</codigo>
+            <descripcion>SERVICIO FACTURACIÓN ELECTRÓNICA PERIODO 09-2019 TOTAL DE COMPROBANTES EMITIDOS 29742</descripcion>
+            <valorUnitario>400.00</valorUnitario>
+            <precioUnitario>472.00</precioUnitario>
+            <IgvMonto>72.00</IgvMonto>
+            <IgvTipo>GRAVADO_OPERACION_ONEROSA</IgvTipo>
+            <valorItem>400.00</valorItem>
+        </detalle>
+        <detalle>
+            <unidadMedida>ZZ</unidadMedida>
+            <cantidadUnidades>1</cantidadUnidades>
+            <codigo>02</codigo>
+            <descripcion>SERVICIO DE VALIDACION OSE PERIODO 09-2019 TOTAL DE COMPROBANTES EMITIDOS 29742</descripcion>
+            <valorUnitario>145.00</valorUnitario>
+            <precioUnitario>171.10</precioUnitario>
+            <IgvMonto>26.10</IgvMonto>
+            <IgvTipo>GRAVADO_OPERACION_ONEROSA</IgvTipo>
+            <valorItem>145.00</valorItem>
+        </detalle>
+        <totales>
+            <valorDescuentoGlobal>0.0</valorDescuentoGlobal>
+            <valorOperacionesGravadas>545.00</valorOperacionesGravadas>
+            <valorOperacionesExoneradas>0.0</valorOperacionesExoneradas>
+            <valorOperacionesInafectas>0.0</valorOperacionesInafectas>
+            <valorOperacionesGratuitas>0.0</valorOperacionesGratuitas>
+            <tasaIgv>0.18</tasaIgv>
+            <valorIgv>98.10</valorIgv>
+            <importeTotal>643.10</importeTotal>
+        </totales>
+        <observacionAdicional>
+            <nombre>fechaVencimiento</nombre>
+            <contenido>2019-10-13</contenido>
+        </observacionAdicional>
+    </cpe>
+</Comprobante>

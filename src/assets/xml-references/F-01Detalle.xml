@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Comprobante xmlns="http://facele.pe/docele/schemas/v10/Comprobante">
+    <cpe>
+        <tipoComprobante>FACTURA</tipoComprobante>
+        <serie>F001</serie>
+        <correlativo>133337</correlativo>
+        <emisor>
+            <ruc>20601122406</ruc>
+            <razonSocial>FACELE SAC</razonSocial>
+            <nombreComercial>FACELE SAC</nombreComercial>
+            <domicilioFiscal>
+                 <ubigeo>150122</ubigeo>
+                 <direccionCompleta>CALLE ENRIQUE MEIGGS NRO. 199 DPTO. 401</direccionCompleta>
+                 <urbanizacion>-</urbanizacion>
+                 <departamento>Lima</departamento>
+                 <provincia>Lima</provincia>
+                 <distrito>Miraflores</distrito>
+            </domicilioFiscal>
+        </emisor>
+        <adquiriente>
+            <tipoIdentificacion>RUC</tipoIdentificacion>
+            <numeroIdentificacion>20603662980</numeroIdentificacion>
+            <nombre>ADMINISTRACION DE ESPACIOS CORPORATIVOS SOCIEDAD ANONIMA CERRADA- AECORP S.A.C.</nombre>
+            <direccionFisica>CAL.JULIO C. TELLO NRO. 184 URB. BARBONCITO (ALT CDRA 39 AV PASEO DE LA REPUBLICA) LIMA - LIMA - MIRAFLORES</direccionFisica>
+            <email>yramirez@aecorp.com.pe</email>
+        </adquiriente>
+        <condiciones>
+            <fechaEmision>2019-10-13</fechaEmision>
+            <moneda>USD</moneda>
+        </condiciones>
+        <detalle>
+            <unidadMedida>ZZ</unidadMedida>
+            <cantidadUnidades>1</cantidadUnidades>
+            <codigo>01</codigo>
+            <descripcion>SERVICIO FACTURACIÓN ELECTRÓNICA PERIODO 09-2019 TOTAL DE COMPROBANTES EMITIDOS 126</descripcion>
+            <valorUnitario>90.00</valorUnitario>
+            <precioUnitario>106.020</precioUnitario>
+            <IgvMonto>16.20</IgvMonto>
+            <IgvTipo>GRAVADO_OPERACION_ONEROSA</IgvTipo>
+            <valorItem>90.00</valorItem>
+        </detalle>
+        <totales>
+            <valorDescuentoGlobal>0.0</valorDescuentoGlobal>
+            <valorOperacionesGravadas>90.00</valorOperacionesGravadas>
+            <valorOperacionesExoneradas>0.0</valorOperacionesExoneradas>
+            <valorOperacionesInafectas>0.0</valorOperacionesInafectas>
+            <valorOperacionesGratuitas>0.0</valorOperacionesGratuitas>
+            <tasaIgv>0.18</tasaIgv>
+            <valorIgv>16.20</valorIgv>
+            <importeTotal>106.20</importeTotal>
+        </totales>
+        <observacionAdicional>
+            <nombre>fechaVencimiento</nombre>
+            <contenido>2019-10-13</contenido>
+        </observacionAdicional>
+    </cpe>
+</Comprobante>
