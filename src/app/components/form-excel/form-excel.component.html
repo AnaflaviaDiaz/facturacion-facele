@@ -1,3 +1,37 @@
+<div class="row align-items-end">
+  <div class="col-8">
+    <label for="">Cargar Excel para facturar</label>
+    <input type="file" class="form-control" (change)="getFile($event)">
+  </div>
+  <div class="col-4">
+      <button class="form-control btn btn-primary" [disabled]="isActive" (click)="emitir()">Emitir</button>
+  </div>
+</div>
 
-<label for="">Cargar Excel para facturar</label>
-<input type="file" class="form-control">
+<div *ngIf="excelVouchers.length > 0">
+  <table class="table table-bordered mt-5">
+    <thead class="thead-light">
+      <tr>
+        <th colspan="2">Comprobante</th>
+        <th colspan="2">Cliente</th>
+        <th>Respuesta</th>
+      </tr>
+      <tr>
+        <th>Serie</th>
+        <th>Correlativo</th>
+        <th>RUC</th>
+        <th>Razón Social</th>
+        <th>Estado DOL</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vouchers of excelVouchers">
+        <td>F001</td>
+        <td></td>
+        <td>{{vouchers.client.numID}}</td>
+        <td>{{vouchers.client.name}}</td>
+        <td>{{'PENDIENTE'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
