@@ -26,23 +26,11 @@ export class FormExcelComponent implements OnInit {
   ngOnInit() {
   }
 
-  getFile(e: any): void {
-    if (e.target.files.length > 0) {
-      const regexExcel = /^.*\.(xls|XLS|xlsx|XLSX|csv|CSV|xl|XL|xla|XLA|xlb|XLB|xlc|XLC|xld|XLD|xlk|XLK|xll|XLL|xlm|XLM|xlsb|XLSB|xlshtml|XLSHTML|xlsm|XLSM|xlt|XLT|xlv|XLV|xlw|XLW)$/;
-      const filenameTemp = e.target.files[0].name;
-      this.filename = filenameTemp.substring(0, filenameTemp.indexOf('.'));
-      const ext = filenameTemp.split('.').pop();
-      // si es excel
-      if (regexExcel.test(`.${ext.toString()}`)) {
-
-        this.isActive = true;
-
-        // archivo xlsx
-        this.readXLSX(e.target);
-      }
-    }
+  private clear() {
+    this.i = 0;
+    this.excelVouchers.length = 0;
+    this.isActive = true;
   }
-
 
   private readXLSX(dataDoc: any): void {
     const target: DataTransfer = <DataTransfer>(dataDoc);
@@ -57,7 +45,6 @@ export class FormExcelComponent implements OnInit {
 
       // cortando 2 primeras celdas
       this.buildBody(dataXLSX.slice(2));
-
     };
     reader.readAsBinaryString(target.files[0]);
   }
@@ -67,7 +54,6 @@ export class FormExcelComponent implements OnInit {
     dataXlsx.map(data => {
       if (data.length) {
         const correlativoExcel = Number(data[1]);
-
         if (correlativoExcel === this.currentCorrelativo) {
 
           const detail: IDetail = {
@@ -143,30 +129,12 @@ export class FormExcelComponent implements OnInit {
           this.i++;
 
         }
-
       }
-
     });
-
-    console.log(this.excelVouchers);
 
     // habilitar btnEmitir
     this.isActive = false;
   }
-
-
-  emitir() {
-    const arrDownload = [];
-    this.excelVouchers.map((elem, i) => {
-      const file = this.buildXML(elem);
-      const filename = `F001-${i}.xml`;
-      const bb = new Blob([file], { type: 'text/plain' });
-      arrDownload.push({ file: bb, filename });
-    });
-    this.saveFiles(arrDownload);
-  }
-
-
 
   private buildXML(e: any) {
     const init = this.emitirSrv.getScriptInit();
@@ -180,9 +148,6 @@ export class FormExcelComponent implements OnInit {
     const final = this.emitirSrv.getScriptFinal();
     return `${init}${voucher}${party}${client}${conditions}${detail}${tax}${additional}${final}`;
   }
-
-
-  // script
 
   private saveFiles(arr: any[]) {
     const zip = new JSZip();
@@ -198,15 +163,33 @@ export class FormExcelComponent implements OnInit {
     }
   }
 
-  private downloadFilesXML(arrData: any[]) {
-    const containerFiles = [];
-    arrData.map((elem: any) => {
+  getFile(e: any): void {
+    if (e.target.files.length > 0) {
+      const regexExcel = /^.*\.(xls|XLS|xlsx|XLSX|csv|CSV|xl|XL|xla|XLA|xlb|XLB|xlc|XLC|xld|XLD|xlk|XLK|xll|XLL|xlm|XLM|xlsb|XLSB|xlshtml|XLSHTML|xlsm|XLSM|xlt|XLT|xlv|XLV|xlw|XLW)$/;
+      const filenameTemp = e.target.files[0].name;
+      this.filename = filenameTemp.substring(0, filenameTemp.indexOf('.'));
+      const ext = filenameTemp.split('.').pop();
+      // si es excel
+      if (regexExcel.test(`.${ext.toString()}`)) {
+
+        this.clear();
+        // archivo xlsx
+        this.readXLSX(e.target);
+      }
+    }
+  }
+
+  emitir() {
+    const arrDownload = [];
+    this.excelVouchers.map((elem, i) => {
       const file = this.buildXML(elem);
-      const filename = `${elem.comprobante.serie}-${elem.comprobante.correlativo}.xml`;
+      const filename = `F001-${i}.xml`;
       const bb = new Blob([file], { type: 'text/plain' });
-      containerFiles.push({ file: bb, filename });
+      arrDownload.push({ file: bb, filename });
     });
-    this.saveFiles(containerFiles);
+    this.saveFiles(arrDownload);
+
+    this.isActive = true;
   }
 
 

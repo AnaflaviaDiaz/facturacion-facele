@@ -32,9 +32,11 @@ export class EmitirService {
   }
 
   getScriptDetail(det: any[]) {
-    return det.map((d: IDetail) => {
-      return `<detalle><unidadMedida>${d.measurement}</unidadMedida><cantidadUnidades>${d.count}</cantidadUnidades><descripcion>${d.description}</descripcion><valorUnitario>${d.unitValue}</valorUnitario><precioUnitario>${d.unitPrice}</precioUnitario><IgvMonto>${d.igvAmount}</IgvMonto><IgvTipo>${d.igvType}</IgvTipo><valorItem>${d.itemValue}</valorItem></detalle>`;
+    let script = '';
+    det.map((d: IDetail) => {
+      script += `<detalle><unidadMedida>${d.measurement}</unidadMedida><cantidadUnidades>${d.count}</cantidadUnidades><descripcion>${d.description}</descripcion><valorUnitario>${d.unitValue}</valorUnitario><precioUnitario>${d.unitPrice}</precioUnitario><IgvMonto>${d.igvAmount}</IgvMonto><IgvTipo>${d.igvType}</IgvTipo><valorItem>${d.itemValue}</valorItem></detalle>`;
     });
+    return script;
   }
 
   getScriptTax(t: ITax) {
