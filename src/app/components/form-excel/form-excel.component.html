@@ -1,10 +1,20 @@
-<div class="row align-items-end">
+<div class="d-flex my-4">
+  <h5 [class]="isProduccion ? '' : 'is-active'">Demo</h5>
+  <div class="custom-control custom-switch mx-2">
+    <input type="checkbox" (change)="toggle()" class="custom-control-input" id="cardToggle"
+      data-add="{&quot;data&quot;:{&quot;datasets&quot;:[{&quot;data&quot;:[15,10,20,12,7,0,8,16,18,16,10,22],&quot;backgroundColor&quot;:&quot;#d2ddec&quot;,&quot;label&quot;:&quot;Affiliate&quot;}]}}">
+    <label class="custom-control-label" for="cardToggle"></label>
+  </div>
+  <h5 [class]="isProduccion ? 'is-active' : ''">Producción</h5>
+</div>
+
+<div class="row align-items-end mt-5">
   <div class="col-8">
     <label for="">Cargar Excel para facturar</label>
     <input type="file" class="form-control" (change)="getFile($event)">
   </div>
   <div class="col-4">
-      <button class="form-control btn btn-primary" [disabled]="isActive" (click)="emitir('declarar')">Emitir</button>
+    <button class="form-control btn btn-primary" [disabled]="isActive" (click)="emitir('declarar')">Emitir</button>
   </div>
 </div>
 

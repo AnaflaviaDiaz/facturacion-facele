@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RedactarComponent } from './views/redactar/redactar.component';
 import { FormExcelComponent } from './components/form-excel/form-excel.component';
-import { TableDetailComponent } from './components/table-detail/table-detail.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
@@ -13,8 +12,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
   declarations: [
     AppComponent,
     RedactarComponent,
-    FormExcelComponent,
-    TableDetailComponent
+    FormExcelComponent
   ],
   imports: [
     BrowserModule,

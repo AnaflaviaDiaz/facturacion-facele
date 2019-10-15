@@ -11,6 +11,7 @@ export const environment = {
     provincia: 'Lima',
     distrito: 'Miraflores'
   },
-  endPoint: 'https://demo.docele.pe/doceleol-rest/rest/',
+  endPointDemo: 'https://demo.docele.pe/doceleol-rest/rest/',
+  endPointProd: 'https://www.docele.pe/doceleol-rest/rest/',
   cors: 'https://cors-anywhere.herokuapp.com/'
 };

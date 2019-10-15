@@ -9,12 +9,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class EmitirService {
 
   readonly facele = environment.facele;
-  readonly endPoint = environment.endPoint;
+  readonly demo = environment.endPointDemo;
+  readonly prod = environment.endPointProd;
   readonly cors = environment.cors;
 
   constructor(
     private http: HttpClient
   ) { }
+
+  getCurrentDate() {
+    const temp = new Date().toLocaleString("en-US", {timeZone: "America/Lima"}).slice(0, 10);
+    return `${temp.slice(6,10)}-${temp.slice(0,2)}-${temp.slice(3,5)}`;
+  }
 
   getScriptInit() {
     return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Comprobante xmlns="http://facele.pe/docele/schemas/v10/Comprobante"><cpe>`;
@@ -39,7 +45,7 @@ export class EmitirService {
   getScriptDetail(det: any[]) {
     let script = '';
     det.map((d: IDetail) => {
-      script += `<detalle><unidadMedida>${d.measurement}</unidadMedida><cantidadUnidades>${d.count}</cantidadUnidades><descripcion>${d.description}</descripcion><valorUnitario>${d.unitValue}</valorUnitario><precioUnitario>${d.unitPrice}</precioUnitario><IgvMonto>${d.igvAmount}</IgvMonto><IgvTipo>${d.igvType}</IgvTipo><valorItem>${d.itemValue}</valorItem></detalle>`;
+      script += `<detalle><unidadMedida>${d.measurement}</unidadMedida><cantidadUnidades>${d.count}</cantidadUnidades><codigo>${d.code}</codigo><descripcion>${d.description}</descripcion><valorUnitario>${d.unitValue}</valorUnitario><precioUnitario>${d.unitPrice}</precioUnitario><IgvMonto>${d.igvAmount}</IgvMonto><IgvTipo>${d.igvType}</IgvTipo><valorItem>${d.itemValue}</valorItem></detalle>`;
     });
     return script;
   }
@@ -83,11 +89,11 @@ export class EmitirService {
 
   // 21: number (email)
 
-  emitir(method: string, body: any) {
+  emitir(method: string, body: any, isProd: boolean) {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
     const script = JSON.stringify(body);
-    return this.http.post(`${this.cors}${this.endPoint}${method}`, script, { headers });
+    return this.http.post(`${this.cors}${isProd ? this.prod : this.demo}${method}`, script, { headers });
   }
 
 }
