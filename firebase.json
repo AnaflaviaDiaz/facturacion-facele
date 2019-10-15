@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/facturacion-facele",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
