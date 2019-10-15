@@ -1,3 +1,7 @@
+export interface IVoucher {
+  correlativo: number;
+}
+
 export interface IClient {
   typeID: string;
   numID: number;
@@ -36,4 +40,18 @@ export interface IDetail {
   igvAmount: number;
   igvType: string;
   itemValue: number;
+}
+
+export interface IDeclarar {
+  rucEmisor: string;
+  tipoDocumento: string;
+  formato: string;
+  documento: string;
+}
+
+export interface IConsultar {
+  rucEmisor: string;
+  tipoDocumento: string;
+  serie: string;
+  correlativo?: number
 }

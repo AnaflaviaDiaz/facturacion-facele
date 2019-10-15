@@ -3,7 +3,8 @@ import { EmitirService } from 'src/app/services/emitir.service';
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 import * as JSZip from 'jszip';
-import { IDetail, IClient, ITax, IAdditional, ICondition } from 'src/app/models/invoice.interface';
+import { IDetail, IClient, ITax, IAdditional, ICondition, IConsultar, IDeclarar, IVoucher } from 'src/app/models/invoice.interface';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-form-excel',
@@ -16,14 +17,30 @@ export class FormExcelComponent implements OnInit {
   currentCorrelativo = 0;
   i = 0;
   isActive = true;
-
+  lastCorrelativo = 0;
+  lastCorrelativoTemp = 0;
   filename = '';
+  facData = environment.facele;
 
   constructor(
     private emitirSrv: EmitirService
   ) { }
 
   ngOnInit() {
+    this.getCorrelativos('consultar');
+  }
+
+  private getCorrelativos(method: string) {
+    const body: IConsultar = {
+      rucEmisor: this.facData.ruc,
+      tipoDocumento: '01',
+      serie: this.facData.serie
+    }
+    this.emitirSrv.emitir(method, body)
+      .subscribe((data: any) => {
+        this.lastCorrelativo = Number(Object.values(data.return.registros).map((elem: any) => elem.correlativo).sort((a, b) => b - a)[0]);
+        console.log(this.lastCorrelativo);
+      }, err => console.log(err));
   }
 
   private clear() {
@@ -51,7 +68,7 @@ export class FormExcelComponent implements OnInit {
 
   private buildBody(dataXlsx: Array<any> = []) {
 
-    dataXlsx.map(data => {
+    dataXlsx.map((data, i) => {
       if (data.length) {
         const correlativoExcel = Number(data[1]);
         if (correlativoExcel === this.currentCorrelativo) {
@@ -70,10 +87,15 @@ export class FormExcelComponent implements OnInit {
 
           this.excelVouchers[this.i - 1].detail.push(detail);
 
-
         } else {
-
+          // *************************************************
           // asignar correlativo
+          // *************************************************
+          this.lastCorrelativo++;
+
+          const correlativo = this.lastCorrelativo;
+
+          console.log(i);
 
           const client: IClient = {
             typeID: 'RUC',
@@ -116,11 +138,13 @@ export class FormExcelComponent implements OnInit {
           };
 
           const json = {
+            correlativo,
             client,
             condition,
             tax,
             detail: [],
-            additional
+            additional,
+            statusDol: ''
           };
 
           json.detail.push(detail);
@@ -138,7 +162,7 @@ export class FormExcelComponent implements OnInit {
 
   private buildXML(e: any) {
     const init = this.emitirSrv.getScriptInit();
-    const voucher = this.emitirSrv.getScriptVoucher(1);
+    const voucher = this.emitirSrv.getScriptVoucher(e.correlativo);
     const party = this.emitirSrv.getScriptParty();
     const client = this.emitirSrv.getScriptClient(e.client);
     const conditions = this.emitirSrv.getScriptConditions(e.condition);
@@ -179,17 +203,54 @@ export class FormExcelComponent implements OnInit {
     }
   }
 
-  emitir() {
+  emitir(method: string) {
+
+    this.excelVouchers.map((elem, i) => {
+      const body: IDeclarar = {
+        rucEmisor: this.facData.ruc,
+        tipoDocumento: '01',
+        formato: 'XMLv10',
+        documento: this.buildXML(elem)
+      };
+
+      this.emitirSrv.emitir(method, body)
+        .subscribe((data: any) => {
+          console.log(data);
+          this.assingStatus(data, i);
+        }, err => console.log(err));
+    });
+
+
     const arrDownload = [];
     this.excelVouchers.map((elem, i) => {
       const file = this.buildXML(elem);
-      const filename = `F001-${i}.xml`;
+      const filename = `F001-${elem.correlativo}.xml`;
       const bb = new Blob([file], { type: 'text/plain' });
       arrDownload.push({ file: bb, filename });
     });
     this.saveFiles(arrDownload);
 
     this.isActive = true;
+  }
+
+  private assingStatus(data: any, i: number) {
+    let descripcionDeclarar: string;
+
+    if (data.status === 400) {
+      descripcionDeclarar = data.error.return.respuesta.descripcion;
+      if (descripcionDeclarar !== 'El comprobante ya existe') {
+        descripcionDeclarar = `No procesado debido a : ${descripcionDeclarar}`;
+      }
+    } else if (data.status === 0) {
+      descripcionDeclarar = 'Error de Emisión';
+    } else if (data.status === 200) {
+      descripcionDeclarar = data.return.respuesta.descripcion;
+    } else {
+      descripcionDeclarar = data.return.respuesta.descripcion;
+    }
+
+    if (descripcionDeclarar === '' || descripcionDeclarar === undefined) { descripcionDeclarar = 'Error de Emisión'; }
+    this.excelVouchers[i].statusDOL = descripcionDeclarar;
   }
 
 

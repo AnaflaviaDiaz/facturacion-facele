@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ICondition, IClient, IAdditional, ITax, IDetail } from '../models/invoice.interface';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,12 @@ import { ICondition, IClient, IAdditional, ITax, IDetail } from '../models/invoi
 export class EmitirService {
 
   readonly facele = environment.facele;
+  readonly endPoint = environment.endPoint;
+  readonly cors = environment.cors;
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   getScriptInit() {
     return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Comprobante xmlns="http://facele.pe/docele/schemas/v10/Comprobante"><cpe>`;
@@ -78,5 +83,11 @@ export class EmitirService {
 
   // 21: number (email)
 
+  emitir(method: string, body: any) {
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+    const script = JSON.stringify(body);
+    return this.http.post(`${this.cors}${this.endPoint}${method}`, script, { headers });
+  }
 
 }

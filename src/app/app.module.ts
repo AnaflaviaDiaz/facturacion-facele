@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { RedactarComponent } from './views/redactar/redactar.component';
 import { FormExcelComponent } from './components/form-excel/form-excel.component';
 import { TableDetailComponent } from './components/table-detail/table-detail.component';
+import { HttpClientModule } from '@angular/common/http';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -16,9 +18,12 @@ import { TableDetailComponent } from './components/table-detail/table-detail.com
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

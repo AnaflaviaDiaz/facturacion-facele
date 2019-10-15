@@ -4,7 +4,7 @@
     <input type="file" class="form-control" (change)="getFile($event)">
   </div>
   <div class="col-4">
-      <button class="form-control btn btn-primary" [disabled]="isActive" (click)="emitir()">Emitir</button>
+      <button class="form-control btn btn-primary" [disabled]="isActive" (click)="emitir('declarar')">Emitir</button>
   </div>
 </div>
 
@@ -27,10 +27,10 @@
     <tbody>
       <tr *ngFor="let vouchers of excelVouchers">
         <td>F001</td>
-        <td></td>
+        <td>{{vouchers.correlativo}}</td>
         <td>{{vouchers.client.numID}}</td>
         <td>{{vouchers.client.name}}</td>
-        <td>{{'PENDIENTE'}}</td>
+        <td>{{vouchers.statusDOL}}</td>
       </tr>
     </tbody>
   </table>
